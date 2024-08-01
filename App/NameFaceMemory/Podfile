@@ -1,5 +1,0 @@
-target 'NameFaceMemory' do
-  use_frameworks!
-  platform :ios, '16.0'
-  pod 'shared', :path => '../shared'
-end
