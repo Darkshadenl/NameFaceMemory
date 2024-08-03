@@ -14,9 +14,12 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "API_KEY", "\"your_api_key_here\"")
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -26,6 +29,9 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+        }
+        getByName("debug") {
+
         }
     }
     compileOptions {
@@ -45,12 +51,15 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
 
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.timber)
+
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform(libs.firebase.bom))
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.firebase.analytics)
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
