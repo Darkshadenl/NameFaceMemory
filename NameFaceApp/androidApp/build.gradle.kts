@@ -49,10 +49,14 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.auth.ktx)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.timber)
+    implementation(libs.androidx.compose.foundation)
+
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))

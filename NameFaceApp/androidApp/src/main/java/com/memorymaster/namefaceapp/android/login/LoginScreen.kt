@@ -11,17 +11,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.memorymaster.namefaceapp.android.R
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(viewModel: LoginViewModel = viewModel(), nav:NavHostController) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
+    val loginState by viewModel.loginState.collectAsState()
+
+    viewModel.onNavigate = { route ->
+        nav.navigate(route)
+    }
 
     Column(
         modifier = Modifier
@@ -35,9 +44,15 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         EmailInput(email, viewModel::onEmailChange)
         PasswordInput(password, viewModel::onPasswordChange)
         LoginButton(viewModel::onLoginClick)
+        when (loginState) {
+            is LoginState.Loading -> CircularProgressIndicator()
+            is LoginState.Error -> Text("Fout: ${(loginState as LoginState.Error).message}")
+            is LoginState.Success -> Text("Succesvol ingelogd!")
+            else -> {}
+        }
         ForgotPasswordLink(viewModel::onForgotPasswordClick)
         CreateAccountButton(viewModel::onCreateAccountClick)
-        LanguageSelector(viewModel::onLanguageChange)
+//        LanguageSelector(viewModel::onLanguageChange)
     }
 }
 
@@ -46,7 +61,7 @@ fun EmailInput(email: String, onEmailChange: (String) -> Unit) {
     OutlinedTextField(
         value = email,
         onValueChange = onEmailChange,
-        label = { Text("E-mail") },
+        label = { Text(stringResource(R.string.email)) },
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -56,7 +71,7 @@ fun PasswordInput(password: String, onPasswordChange: (String) -> Unit) {
     OutlinedTextField(
         value = password,
         onValueChange = onPasswordChange,
-        label = { Text("Wachtwoord") },
+        label = { Text(stringResource(R.string.password)) },
         modifier = Modifier.fillMaxWidth(),
         visualTransformation = PasswordVisualTransformation()
     )
@@ -69,14 +84,14 @@ fun LoginButton(onLoginClick: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A73E8))
     ) {
-        Text("Inloggen", color = Color.White)
+        Text(stringResource(R.string.login), color = Color.White)
     }
 }
 
 @Composable
 fun ForgotPasswordLink(onForgotPasswordClick: () -> Unit) {
     Text(
-        text = "Wachtwoord vergeten?",
+        text = stringResource(R.string.forgot_password),
         color = Color(0xFF1A73E8),
         modifier = Modifier.clickable(onClick = onForgotPasswordClick)
     )
@@ -88,14 +103,14 @@ fun CreateAccountButton(onCreateAccountClick: () -> Unit) {
         onClick = onCreateAccountClick,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Account aanmaken", color = Color(0xFF1A73E8))
+        Text(stringResource(R.string.create_account), color = Color(0xFF1A73E8))
     }
 }
 
 @Composable
 fun LanguageSelector(onLanguageChange: () -> Unit) {
     Text(
-        text = "Nederlands ▼",
+        text = stringResource(R.string.language_selector),
         color = Color(0xFF5F6368),
         modifier = Modifier.clickable(onClick = onLanguageChange)
     )
@@ -109,82 +124,17 @@ fun AppLogo() {
             .background(Color(0xFF4285F4), CircleShape),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "NFM",
-            color = Color.White,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
+
     }
 }
 
 @Composable
 fun AppName() {
     Text(
-        text = "NameFaceMaster",
+        text = stringResource(R.string.app_name),
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground
-    )
-}
-
-@Composable
-fun EmailInput() {
-    OutlinedTextField(
-        value = "",
-        onValueChange = { },
-        label = { Text("Email") },
-        modifier = Modifier.fillMaxWidth()
-    )
-}
-
-@Composable
-fun PasswordInput() {
-    OutlinedTextField(
-        value = "",
-        onValueChange = { },
-        label = { Text("Password") },
-        modifier = Modifier.fillMaxWidth(),
-        visualTransformation = PasswordVisualTransformation()
-    )
-}
-
-@Composable
-fun LoginButton() {
-    Button(
-        onClick = { },
-        modifier = Modifier.fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A73E8))
-    ) {
-        Text("Log In", color = Color.White)
-    }
-}
-
-@Composable
-fun ForgotPasswordLink() {
-    Text(
-        text = "Forgot password?",
-        color = Color(0xFF1A73E8),
-        modifier = Modifier.clickable { }
-    )
-}
-
-@Composable
-fun CreateAccountButton() {
-    OutlinedButton(
-        onClick = { },
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text("Create account", color = Color(0xFF1A73E8))
-    }
-}
-
-@Composable
-fun LanguageSelector() {
-    Text(
-        text = "Nederlands ▼",
-        color = Color(0xFF5F6368),
-        modifier = Modifier.clickable { }
     )
 }
 
@@ -192,6 +142,8 @@ fun LanguageSelector() {
 @Composable
 fun LoginScreenPreview() {
     MaterialTheme {
-        LoginScreen()
+        val navController = rememberNavController()
+        LoginScreen(nav = navController)
     }
 }
+

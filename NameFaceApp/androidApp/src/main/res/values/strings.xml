@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    Login   -->
+    <string name="app_name">NameFaceApp</string>
+    <string name="login">Log in</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_account">Create account</string>
+    <string name="or_capitalized">OF</string>
+    <string name="google_sign_in">Google login</string>
+    <string name="language_selector">English ▼</string>
+
+    <!--    Register    -->
+    <string name="register">Register</string>
+    <string name="email_address">E-mailaddress</string>
+    <string name="already_account">Already have an account?</string>
+
+
+
+</resources>
