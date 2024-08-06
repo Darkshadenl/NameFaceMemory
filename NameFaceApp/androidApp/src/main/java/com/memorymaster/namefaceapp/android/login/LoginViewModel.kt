@@ -36,6 +36,7 @@ class LoginViewModel : ViewModel() {
             try {
                 auth.signInWithEmailAndPassword(email.value, password.value).await()
                 _loginState.value = LoginState.Success
+                onNavigate?.invoke("home")
             } catch (e: Exception) {
                 _loginState.value = LoginState.Error(e.message ?: "Onbekende fout")
             }

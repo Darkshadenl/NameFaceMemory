@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            AppTheme {
+            AppTheme (darkTheme = false) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,

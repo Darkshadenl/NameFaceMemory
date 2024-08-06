@@ -50,7 +50,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel(), nav:NavHostController) 
             is LoginState.Success -> Text("Succesvol ingelogd!")
             else -> {}
         }
-        ForgotPasswordLink(viewModel::onForgotPasswordClick)
+//        ForgotPasswordLink(viewModel::onForgotPasswordClick)
         CreateAccountButton(viewModel::onCreateAccountClick)
 //        LanguageSelector(viewModel::onLanguageChange)
     }

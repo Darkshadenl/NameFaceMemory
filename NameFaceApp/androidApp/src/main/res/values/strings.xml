@@ -17,6 +17,7 @@
     <string name="email_address">E-mailaddress</string>
     <string name="already_account">Already have an account?</string>
 
-
+    <!--    Homescreen-->
+    <string name="go_practiceScreen">Go to PracticeScreen</string>
 
 </resources>

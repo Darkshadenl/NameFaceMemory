@@ -80,7 +80,7 @@ fun RegisterScreen(viewModel: RegistrationViewModel = viewModel(), nav: NavHostC
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
         ) {
-            Text(stringResource(R.string.login), color = Color.White)
+            Text(stringResource(R.string.register), color = Color.White)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
